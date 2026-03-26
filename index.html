@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AURUM — Luxury Jewellery</title>
+  <meta name="description" content="Discover timeless luxury jewellery — handcrafted rings, necklaces, earrings and bracelets at AURUM." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8d5a3;
+      --gold-dark: #9a7a30;
+      --black: #080808;
+      --dark: #111111;
+      --dark2: #1a1a1a;
+      --text: #f0ead8;
+      --muted: #7a7060;
+      --border: rgba(201,168,76,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 5%;
+      background: rgba(8,8,8,0.6);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      transition: padding 0.3s;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem; font-weight: 300; letter-spacing: 0.3em;
+      color: var(--gold); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--text); text-decoration: none;
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      position: relative; transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px; background: var(--gold);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      border: 1px solid var(--gold); color: var(--gold);
+      padding: 0.55rem 1.5rem; font-size: 0.68rem;
+      letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none;
+      transition: all 0.3s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--black); }
+
+    /* ── HERO ── */
+    #hero {
+      height: 100vh; position: relative;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&q=80') center/cover no-repeat;
+    }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.2) 50%, rgba(8,8,8,0.85) 100%);
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 700px; padding: 0 2rem; }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--gold-dark); padding-bottom: 0.5rem;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 300; line-height: 1.1;
+      margin-bottom: 1.5rem; color: #fff;
+    }
+    .hero-title em { font-style: italic; color: var(--gold-light); }
+    .hero-sub {
+      font-size: 0.85rem; letter-spacing: 0.08em; line-height: 1.9;
+      color: rgba(240,234,216,0.7); margin-bottom: 2.5rem;
+    }
+    .btn-primary {
+      display: inline-block; background: var(--gold); color: var(--black);
+      padding: 1rem 2.8rem; font-size: 0.72rem;
+      letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none;
+      font-weight: 500; transition: all 0.3s; margin-right: 1rem;
+    }
+    .btn-primary:hover { background: var(--gold-light); }
+    .btn-outline {
+      display: inline-block; border: 1px solid rgba(240,234,216,0.5);
+      color: var(--text); padding: 1rem 2.8rem; font-size: 0.72rem;
+      letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none;
+      transition: all 0.3s;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .scroll-indicator {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+      animation: bounce 2s infinite;
+    }
+    .scroll-indicator span { display: block; width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold), transparent); }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    /* ── MARQUEE ── */
+    .marquee-track {
+      background: var(--gold); overflow: hidden;
+      padding: 0.75rem 0; white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 18s linear infinite;
+      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--black); font-weight: 500;
+    }
+    .marquee-inner span { margin: 0 2rem; }
+    .marquee-inner .dot { opacity: 0.5; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 5%; }
+    .section-label {
+      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem; display: block;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300;
+      line-height: 1.2; color: var(--text);
+    }
+    .section-title em { font-style: italic; color: var(--gold-light); }
+    .divider {
+      width: 60px; height: 1px; background: var(--gold);
+      margin: 1.5rem 0; display: block;
+    }
+
+    /* ── COLLECTIONS ── */
+    #collections { background: var(--dark); }
+    .collections-header { text-align: center; margin-bottom: 4rem; }
+    .collections-header .divider { margin: 1.5rem auto; }
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5px;
+    }
+    .col-card {
+      position: relative; overflow: hidden;
+      aspect-ratio: 3/4; cursor: pointer;
+    }
+    .col-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+      display: block;
+    }
+    .col-card:hover img { transform: scale(1.08); }
+    .col-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, rgba(8,8,8,0.1) 60%);
+      display: flex; flex-direction: column;
+      justify-content: flex-end; padding: 2rem;
+      transition: background 0.4s;
+    }
+    .col-card:hover .col-overlay { background: linear-gradient(to top, rgba(8,8,8,0.9) 0%, rgba(8,8,8,0.3) 60%); }
+    .col-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 300; color: #fff; margin-bottom: 0.3rem;
+    }
+    .col-count { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+    .col-arrow {
+      display: inline-block; margin-top: 0.8rem;
+      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold-light); opacity: 0;
+      transform: translateY(8px); transition: all 0.3s 0.1s;
+    }
+    .col-card:hover .col-arrow { opacity: 1; transform: translateY(0); }
+
+    /* ── FEATURED ── */
+    #featured { background: var(--black); }
+    .featured-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 3.5rem; flex-wrap: wrap; gap: 1.5rem;
+    }
+    .view-all {
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold-dark);
+      padding-bottom: 2px; transition: color 0.3s;
+    }
+    .view-all:hover { color: var(--gold-light); }
+    .products-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+    }
+    .product-card { position: relative; cursor: pointer; }
+    .product-img-wrap {
+      position: relative; overflow: hidden;
+      aspect-ratio: 3/4; background: var(--dark2);
+      margin-bottom: 1.2rem;
+    }
+    .product-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .product-card:hover .product-img-wrap img { transform: scale(1.06); }
+    .product-badge {
+      position: absolute; top: 1rem; left: 1rem;
+      background: var(--gold); color: var(--black);
+      font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.3rem 0.8rem; font-weight: 500;
+    }
+    .product-wish {
+      position: absolute; top: 1rem; right: 1rem;
+      width: 36px; height: 36px; border: 1px solid rgba(240,234,216,0.3);
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(8,8,8,0.5); backdrop-filter: blur(4px);
+      opacity: 0; transform: translateY(-5px);
+      transition: all 0.3s; color: var(--text); font-size: 1rem;
+      cursor: pointer;
+    }
+    .product-card:hover .product-wish { opacity: 1; transform: translateY(0); }
+    .product-wish:hover { background: var(--gold); border-color: var(--gold); color: var(--black); }
+    .product-add {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: rgba(8,8,8,0.85); backdrop-filter: blur(8px);
+      border-top: 1px solid var(--border);
+      text-align: center; padding: 0.9rem;
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); opacity: 0; transform: translateY(100%);
+      transition: all 0.4s ease;
+    }
+    .product-card:hover .product-add { opacity: 1; transform: translateY(0); }
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 400; color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+    .product-meta { display: flex; justify-content: space-between; align-items: center; }
+    .product-material { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); }
+    .product-price { font-size: 0.9rem; color: var(--gold); letter-spacing: 0.05em; }
+
+    /* ── ABOUT SPLIT ── */
+    #about { background: var(--dark); padding: 0; overflow: hidden; }
+    .about-split { display: grid; grid-template-columns: 1fr 1fr; min-height: 600px; }
+    .about-img {
+      position: relative; overflow: hidden;
+    }
+    .about-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .about-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 70%, var(--dark));
+    }
+    .about-text {
+      padding: 6rem 5rem; display: flex; flex-direction: column; justify-content: center;
+    }
+    .about-text p {
+      font-size: 0.88rem; line-height: 2; color: rgba(240,234,216,0.7);
+      margin-top: 1.2rem; margin-bottom: 2rem;
+    }
+    .stats { display: flex; gap: 3rem; margin-top: 2rem; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem; font-weight: 300; color: var(--gold); display: block;
+    }
+    .stat-label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: var(--black); text-align: center; }
+    .testimonials-header { margin-bottom: 4rem; }
+    .testimonials-header .divider { margin: 1.5rem auto; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; }
+    .testi-card {
+      border: 1px solid var(--border); padding: 2.5rem;
+      position: relative; transition: border-color 0.3s;
+    }
+    .testi-card:hover { border-color: var(--gold); }
+    .testi-stars { color: var(--gold); font-size: 0.8rem; letter-spacing: 0.2em; margin-bottom: 1.5rem; }
+    .testi-quote {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.05rem; line-height: 1.8; color: rgba(240,234,216,0.85);
+      margin-bottom: 1.5rem;
+    }
+    .testi-author { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+
+    /* ── NEWSLETTER ── */
+    #newsletter {
+      background: url('https://images.pexels.com/photos/3820315/pexels-photo-3820315.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
+      position: relative; text-align: center;
+    }
+    #newsletter::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(8,8,8,0.82);
+    }
+    .newsletter-inner { position: relative; z-index: 2; max-width: 560px; margin: 0 auto; }
+    .newsletter-inner .section-title { margin-bottom: 1rem; }
+    .newsletter-inner p { font-size: 0.85rem; color: rgba(240,234,216,0.65); margin-bottom: 2.5rem; line-height: 1.9; }
+    .nl-form { display: flex; gap: 0; max-width: 440px; margin: 0 auto; }
+    .nl-form input {
+      flex: 1; background: rgba(240,234,216,0.07); border: 1px solid var(--border);
+      border-right: none; padding: 1rem 1.5rem;
+      color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.8rem;
+      outline: none; transition: border-color 0.3s;
+    }
+    .nl-form input::placeholder { color: var(--muted); }
+    .nl-form input:focus { border-color: var(--gold); }
+    .nl-form button {
+      background: var(--gold); border: none; padding: 1rem 1.8rem;
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--black); font-weight: 500; cursor: pointer; transition: background 0.3s;
+      font-family: 'Inter', sans-serif;
+    }
+    .nl-form button:hover { background: var(--gold-light); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark); border-top: 1px solid var(--border);
+      padding: 5rem 5% 2rem;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem; margin-bottom: 4rem;
+    }
+    .footer-brand .nav-logo { display: block; margin-bottom: 1.2rem; }
+    .footer-brand p { font-size: 0.8rem; color: var(--muted); line-height: 1.9; max-width: 260px; }
+    .footer-socials { display: flex; gap: 1rem; margin-top: 1.8rem; }
+    .social-btn {
+      width: 36px; height: 36px; border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 0.8rem; text-decoration: none;
+      transition: all 0.3s;
+    }
+    .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .footer-col h4 {
+      font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.5rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.75rem; }
+    .footer-col ul li a {
+      color: var(--muted); text-decoration: none; font-size: 0.8rem;
+      transition: color 0.3s;
+    }
+    .footer-col ul li a:hover { color: var(--gold-light); }
+    .footer-bottom {
+      border-top: 1px solid var(--border); padding-top: 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.68rem; color: var(--muted); flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom a { color: var(--muted); text-decoration: none; margin-left: 1.5rem; }
+    .footer-bottom a:hover { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .collections-grid { grid-template-columns: repeat(2,1fr); }
+      .products-grid { grid-template-columns: repeat(2,1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+      .about-text { padding: 4rem 3rem; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hero-title { font-size: 2.8rem; }
+      .about-split { grid-template-columns: 1fr; }
+      .about-img { height: 350px; }
+      .about-img::after { display: none; }
+      .about-text { padding: 3rem 2rem; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .btn-primary, .btn-outline { display: block; text-align: center; margin: 0.5rem 0; }
+      .nl-form { flex-direction: column; }
+      .nl-form input { border-right: 1px solid var(--border); border-bottom: none; }
+      .stats { gap: 2rem; }
+    }
+    @media (max-width: 480px) {
+      .collections-grid { grid-template-columns: 1fr; }
+      .products-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">AURUM</a>
+    <ul class="nav-links">
+      <li><a href="#collections">Collections</a></li>
+      <li><a href="#featured">Shop</a></li>
+      <li><a href="#about">Our Story</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#newsletter">Contact</a></li>
+    </ul>
+    <a href="#featured" class="nav-cta">Shop Now</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content fade-up visible">
+      <span class="hero-eyebrow">New Collection 2025</span>
+      <h1 class="hero-title">Where <em>Elegance</em><br>Meets Eternity</h1>
+      <p class="hero-sub">Handcrafted fine jewellery for the moments that matter most.<br>Each piece tells a story as unique as yours.</p>
+      <a href="#featured" class="btn-primary">Explore Collection</a>
+      <a href="#about" class="btn-outline">Our Craft</a>
+    </div>
+    <div class="scroll-indicator">scroll<span></span></div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-track" aria-hidden="true">
+    <div class="marquee-inner">
+      <span>Handcrafted Luxury</span><span class="dot">✦</span>
+      <span>18K Gold &amp; Platinum</span><span class="dot">✦</span>
+      <span>Ethically Sourced Diamonds</span><span class="dot">✦</span>
+      <span>Bespoke Creations</span><span class="dot">✦</span>
+      <span>Lifetime Guarantee</span><span class="dot">✦</span>
+      <span>Handcrafted Luxury</span><span class="dot">✦</span>
+      <span>18K Gold &amp; Platinum</span><span class="dot">✦</span>
+      <span>Ethically Sourced Diamonds</span><span class="dot">✦</span>
+      <span>Bespoke Creations</span><span class="dot">✦</span>
+      <span>Lifetime Guarantee</span><span class="dot">✦</span>
+    </div>
+  </div>
+
+  <!-- COLLECTIONS -->
+  <section id="collections">
+    <div class="collections-header fade-up">
+      <span class="section-label">Curated For You</span>
+      <h2 class="section-title">Our <em>Collections</em></h2>
+      <span class="divider"></span>
+    </div>
+    <div class="collections-grid">
+      <div class="col-card fade-up">
+        <img src="https://images.pexels.com/photos/1721932/pexels-photo-1721932.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Rings Collection" loading="lazy" />
+        <div class="col-overlay">
+          <p class="col-name">Rings</p>
+          <p class="col-count">48 Pieces</p>
+          <span class="col-arrow">Explore →</span>
+        </div>
+      </div>
+      <div class="col-card fade-up">
+        <img src="https://images.pexels.com/photos/1454171/pexels-photo-1454171.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Necklaces Collection" loading="lazy" />
+        <div class="col-overlay">
+          <p class="col-name">Necklaces</p>
+          <p class="col-count">36 Pieces</p>
+          <span class="col-arrow">Explore →</span>
+        </div>
+      </div>
+      <div class="col-card fade-up">
+        <img src="https://images.pexels.com/photos/1232459/pexels-photo-1232459.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Bracelets Collection" loading="lazy" />
+        <div class="col-overlay">
+          <p class="col-name">Bracelets</p>
+          <p class="col-count">29 Pieces</p>
+          <span class="col-arrow">Explore →</span>
+        </div>
+      </div>
+      <div class="col-card fade-up">
+        <img src="https://images.pexels.com/photos/3076607/pexels-photo-3076607.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Earrings Collection" loading="lazy" />
+        <div class="col-overlay">
+          <p class="col-name">Earrings</p>
+          <p class="col-count">54 Pieces</p>
+          <span class="col-arrow">Explore →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PRODUCTS -->
+  <section id="featured">
+    <div class="featured-header">
+      <div>
+        <span class="section-label">Hand Picked</span>
+        <h2 class="section-title">Signature <em>Pieces</em></h2>
+      </div>
+      <a href="#" class="view-all">View All Pieces →</a>
+    </div>
+    <div class="products-grid">
+      <div class="product-card fade-up">
+        <div class="product-img-wrap">
+          <span class="product-badge">New</span>
+          <img src="https://images.pexels.com/photos/691046/pexels-photo-691046.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Diamond Solitaire Ring" loading="lazy" />
+          <div class="product-wish">♡</div>
+          <div class="product-add">+ Add to Cart</div>
+        </div>
+        <p class="product-name">Lumière Solitaire Ring</p>
+        <div class="product-meta">
+          <span class="product-material">18K White Gold · Diamond</span>
+          <span class="product-price">$4,850</span>
+        </div>
+      </div>
+      <div class="product-card fade-up">
+        <div class="product-img-wrap">
+          <span class="product-badge">Bestseller</span>
+          <img src="https://images.pexels.com/photos/1616096/pexels-photo-1616096.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Gold Drop Necklace" loading="lazy" />
+          <div class="product-wish">♡</div>
+          <div class="product-add">+ Add to Cart</div>
+        </div>
+        <p class="product-name">Céleste Drop Necklace</p>
+        <div class="product-meta">
+          <span class="product-material">18K Yellow Gold · Sapphire</span>
+          <span class="product-price">$3,200</span>
+        </div>
+      </div>
+      <div class="product-card fade-up">
+        <div class="product-img-wrap">
+          <img src="https://images.pexels.com/photos/1407305/pexels-photo-1407305.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Diamond Tennis Bracelet" loading="lazy" />
+          <div class="product-wish">♡</div>
+          <div class="product-add">+ Add to Cart</div>
+        </div>
+        <p class="product-name">Éclat Tennis Bracelet</p>
+        <div class="product-meta">
+          <span class="product-material">Platinum · Full Diamond</span>
+          <span class="product-price">$8,900</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-split">
+      <div class="about-img">
+        <img src="https://images.pexels.com/photos/3819538/pexels-photo-3819538.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Artisan crafting jewellery" loading="lazy" />
+      </div>
+      <div class="about-text fade-up">
+        <span class="section-label">Est. 1987</span>
+        <h2 class="section-title">Crafted with<br><em>Passion &amp; Precision</em></h2>
+        <span class="divider"></span>
+        <p>For over three decades, AURUM has been synonymous with uncompromising quality and timeless design. Each piece is meticulously handcrafted by master artisans using only the finest ethically sourced materials.</p>
+        <p>Our atelier in Paris brings together centuries-old goldsmithing traditions with contemporary vision — creating jewellery that transcends trends and becomes heirlooms.</p>
+        <div class="stats">
+          <div>
+            <span class="stat-num">37+</span>
+            <span class="stat-label">Years of Craft</span>
+          </div>
+          <div>
+            <span class="stat-num">12K</span>
+            <span class="stat-label">Happy Clients</span>
+          </div>
+          <div>
+            <span class="stat-num">100%</span>
+            <span class="stat-label">Ethically Sourced</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="testimonials-header fade-up">
+      <span class="section-label">Client Stories</span>
+      <h2 class="section-title">Worn with <em>Love</em></h2>
+      <span class="divider"></span>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card fade-up">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"The ring was beyond anything I could have imagined. The craftsmanship is extraordinary — she said yes immediately."</p>
+        <span class="testi-author">— James &amp; Elena, London</span>
+      </div>
+      <div class="testi-card fade-up">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"AURUM created a bespoke necklace that perfectly captured my grandmother's essence. A true family heirloom."</p>
+        <span class="testi-author">— Sophie Laurant, Paris</span>
+      </div>
+      <div class="testi-card fade-up">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Impeccable service and breathtaking jewellery. The tennis bracelet I purchased receives compliments everywhere I go."</p>
+        <span class="testi-author">— Amara Osei, New York</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section id="newsletter">
+    <div class="newsletter-inner fade-up">
+      <span class="section-label">Join the Circle</span>
+      <h2 class="section-title">Exclusive <em>Access</em></h2>
+      <span class="divider" style="margin: 1.5rem auto;"></span>
+      <p>Subscribe to receive early access to new collections, private events, and curated jewellery stories directly to your inbox.</p>
+      <form class="nl-form" onsubmit="return false;">
+        <input type="email" id="email-input" placeholder="Your email address" aria-label="Email address" />
+        <button type="submit" id="subscribe-btn">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">AURUM</a>
+        <p>Fine jewellery crafted for life's most precious moments. Where artistry meets excellence, every piece is a masterwork.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" aria-label="Instagram">&#x1D405;</a>
+          <a href="#" class="social-btn" aria-label="Pinterest">P</a>
+          <a href="#" class="social-btn" aria-label="Facebook">f</a>
+          <a href="#" class="social-btn" aria-label="Twitter">𝕏</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Collections</h4>
+        <ul>
+          <li><a href="#">Rings</a></li>
+          <li><a href="#">Necklaces</a></li>
+          <li><a href="#">Earrings</a></li>
+          <li><a href="#">Bracelets</a></li>
+          <li><a href="#">Bespoke</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Atelier</a></li>
+          <li><a href="#">Sustainability</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Shipping &amp; Returns</a></li>
+          <li><a href="#">Ring Sizing</a></li>
+          <li><a href="#">Care Guide</a></li>
+          <li><a href="#">Warranty</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 AURUM Jewellery. All rights reserved.</span>
+      <div>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Settings</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-triggered fade animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 120);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Navbar shrink on scroll
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').style.padding =
+        window.scrollY > 60 ? '0.9rem 5%' : '1.4rem 5%';
+    });
+
+    // Wishlist toggle
+    document.querySelectorAll('.product-wish').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.textContent = btn.textContent === '♡' ? '♥' : '♡';
+        btn.style.color = btn.textContent === '♥' ? 'var(--gold)' : '';
+      });
+    });
+  </script>
+</body>
+</html>
